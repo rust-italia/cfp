@@ -3,7 +3,66 @@
 ## Note
 * Analisi su [e7cd7ab](https://gitlab.com/garrog/romp/-/commit/e7cd7ab5dfa5cbe5ac042fbc831c49637be561be)
 * 3 check warnings
-* Un numero indeterminato di clippy lints
+* Un numero interessante di clippy lints
+  * `body_parser/fixed_length.rs`: 3
+  * `bootstrap.rs`: 2
+  * `config/config.rs`: 4
+  * `config.rs`: 1
+  * `config/user.rs`: 7
+  * `downstream.rs`: 4
+  * `init.rs`: 2
+  * `message/request.rs`: 1
+  * `message/response.rs`: 1
+  * `message/serializer.rs`: 14
+  * `message/stomp_message.rs`: 20
+  * `parser.rs`: 4
+  * `persist/mlog.rs`: 1
+  * `session/ecg.rs`: 3
+  * `session/filter.rs`: 6
+  * `session/mq.rs`: 6
+  * `session/reader.rs`: 18
+  * `session/stomp_session.rs`: 12
+  * `session/subscription.rs`: 11
+  * `session/writer.rs`: 3
+  * `system/limits.rs`: 1
+  * `util.rs`: 2
+  * `web_socket/ws_demunge.rs`: 10
+  * `web_socket/ws_headers.rs`: 4
+  * `web_socket/ws_response.rs`: 5
+  * `workflow/console/filter.rs`: 3
+  * `workflow/console/ngin.rs`: 16
+  * `workflow/context.rs`: 3
+  * `workflow/destination/destination.rs`: 12
+  * `workflow/destination.rs`: 1
+  * `workflow/destination/server.rs`: 8
+  * `workflow/filter/ack.rs`: 1
+  * `workflow/filter/admin/clean.rs`: 1
+  * `workflow/filter/admin/perms.rs`: 1
+  * `workflow/filter/admin.rs`: 1
+  * `workflow/filter/admin/shutdown.rs`: 1
+  * `workflow/filter/closure.rs`: 1
+  * `workflow/filter/connect.rs`: 2
+  * `workflow/filter/disconnect.rs`: 1
+  * `workflow/filter/echo.rs`: 3
+  * `workflow/filter/http/closure.rs`: 1
+  * `workflow/filter/http/get.rs`: 1
+  * `workflow/filter/http/health_check.rs`: 1
+  * `workflow/filter/http/hello.rs`: 1
+  * `workflow/filter/http/not_found.rs`: 2
+  * `workflow/filter/http.rs`: 2
+  * `workflow/filter/http/upgrade.rs`: 1
+  * `workflow/filter/http/version.rs`: 1
+  * `workflow/filter/log.rs`: 2
+  * `workflow/filter/persist.rs`: 3
+  * `workflow/filter/ping.rs`: 1
+  * `workflow/filter/receipt.rs`: 1
+  * `workflow/filter/requires_auth.rs`: 1
+  * `workflow/filter/resend.rs`: 3
+  * `workflow/filter/send.rs`: 2
+  * `workflow/filter/subscribe.rs`: 2
+  * `workflow/http_router.rs`: 3
+  * `workflow/router.rs`: 1
+  * `workflow/sha_auth.rs`: 5
 * I test passano, ci sono warnings
 * Risultati di coverage per cargo tarpaulin:
   ```
@@ -560,3 +619,4 @@
         For example, `cargo-udeps` cannot detect usage of crates that are only used in doc-tests.
         To ignore some dependencies, write `package.metadata.cargo-udeps.ignore` in Cargo.toml.
   ```
+* `ascii.rs` è eliminabile
