@@ -1,7 +1,7 @@
 # Hack ROMP -- aggiornare codice async legacy
 
 ## Note
-* Analisi su e7cd7ab
+* Analisi su [e7cd7ab](https://gitlab.com/garrog/romp/-/commit/e7cd7ab5dfa5cbe5ac042fbc831c49637be561be)
 * 3 check warnings
 * Un numero indeterminato di clippy lints
 * I test passano, ci sono warnings
