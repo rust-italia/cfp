@@ -1,5 +1,68 @@
 # Hack ROMP -- aggiornare codice async legacy
 
+L'idea per l'incontro sta nel supportare un membro della comunità di Rust Italia, [Garro](https://gitlab.com/garrog), nel tentativo di aggiornare una libreria all'attuale ecosistema _async_, [romp](https://gitlab.com/garrog/romp).
+
+## Il problema
+
+Romp, crate Rust che implementa il protocollo [STOMP](https://stomp.github.io/), soffre di una variegata serie di problemi, tra i quali l'essere basata sull'ecosistema asincrono pre-`async`/`await`.
+Questo si traduce nei _vecchi_ `futures` 0.1, `tokio` 0.1 e ovviamente l'assenza totale di `async`/`await`.
+Effettuare un aggiornamento di queste componenti è pressoché fondamentale per l'uso pratico della crate, e lo sforzo per raggiungere lo scopo non è da sottovalutare.
+
+## La proposta
+
+Per lavorare a tale progetto è necessario tempo e freschezza mentale.
+La migliore soluzione potrebbe quindi essere organizzare un incontro di sabato mattina della durata di 4 ore, dalle 9 alle 13.
+Tale incontro avrà una struttura _a workshop_, durante la quale verrà prima fatta una breve introduzione sulle problematiche da affrontare e ci si dividerà quindi in gruppi di 2-4 persone al massimo.
+L'evento si dividerà in due fasi, di durata variabile in base alle esigenze di sviluppo.
+
+### Prima fase
+
+La prima fase servirà per far prendere dimestichezza ai partecipanti, così che possano riuscire ad affrontare problematiche di basso livello di difficoltà e così mettere mano alla codebase.
+
+Durante questa fase ogni gruppo prenderà in carico una issue precedentemente creata, risolverà il problema, se ritenuto necessario creerà un _regression test_ e creerà una merge request.
+Un piccolo gruppo di persone si occuperà di revisionare le merge request e, al momento opportuno, fare la merge.
+In base alla semplicità della issue, il gruppo potrà decidere di partire immediatamente con un'altra issue o decidere di aspettare la revisione.
+
+Si raccomanda dimestichezza con `git rebase` perché sarà frequente in queste fasi.
+
+### Seconda fase
+
+Una volta soddisfatti del numero di issue chiuse o una volta che esse siano terminate, i gruppi cominceranno una fase più complessa, riguardante la componente asincrona.
+
+All'inizio di questa fase, il gruppo che si occuperà di fare revisioni con il supporto di Garro, si occuperà di __aggiungere__ alle dipendenze `futures` 0.3 e `tokio` 1.7, utilizzando degli alias.
+In questo modo sarà possibile utilizzare contemporaneamente i vecchi `Future` e quelli nuovi.
+
+A questo punto utilizzeremo uno strumento di condivisione testuale per coordinare le modifiche da effettuare sui files.
+La procedura da seguire per ogni gruppo sarà la seguente:
+
+1. Scegliere un file nel repository contentene codice asincrono. Ha senso scegliere uno modificato durante la prima fase.
+2. Scegliere una funzione all'interno del file con codice asincrono.
+3. Cercare nello strumento di testo condiviso se è presente una sezione relativa al file scelto. Se non è presente andrà creata.
+4. Cercare nello strumento di testo condiviso, nella sezione relativa al file, se è già presente la funzione individuata.
+   Se non è presente, dovrà essere aggiunta la funzione e il nome delle persone/del gruppo che se ne occuperanno.
+   Se la funzione è presente, si tornerà alla fase 2; se tutte le funzioni del file sono presenti nel foglio condiviso si potrà segnalare ciò (con uno strikethrough ad esempio) e passare al punto 1.
+5. Si provvederà a convertire __il corpo della funzione__ al nuovo ecosistema asincrono.
+   Tale conversione consiste nell'utilizzare i layer di compatibilità [di `futures`](https://docs.rs/futures/0.3.15/futures/compat/index.html) e [di `tokio`](https://docs.rs/tokio-compat/0.1.6/tokio_compat/) per poter utilizzare l'approccio attuale ma continuando a prendere in input e dare in output le strutture legacy.
+6. Merge request con review come in fase 1.
+
+### Ipotetica terza fase
+
+Non erano due le fasi? Nel caso i gruppi si dimostrassero particolarmente efficienti, si potrà procedere alla terza fase, che richiede una maggiore coordinazione rispetto alla seconda.
+
+Questa fase consiste nell'eliminare un po' alla volta i _layer legacy_ tra funzioni.
+Ogni gruppo dovrà quindi scegliere una funzione e cercare tutte le funzioni che la richiamano, così da eliminare le conversioni.
+
+Tale procedura richiede particolari attenzioni, in quanto è molto facile avere più di un gruppo che cercherà di modificare le stesse funzioni.
+Un buon approccio potrebbe consistere in una versione modificata dell'iter mostrato per la seconda fase, dove però ogni gruppo dovrà controllare non solo la funzione su sta focalizzando, ma anche i file e le funzioni che si andranno a modificare come effetto secondario.
+Avere questo livello di coordinazione non impedirà certamente di avere conflitti in fase di rebase, ma permetterà di sapere in anticipo se si andrà incontro a problemi, così da arginarli velocemente.
+
+## Strumenti
+
+Allo stato attuale si raccomanda l'utilizzo della versione _closed_ di _Visual Studio Code_ e lo strumenti di _Live Sharing_.
+Dopo una approfondita ricerca, sembra che non ci siano delle alternative sufficientemente valide che permettano di utilizzare altri editor mantenendo un sistema efficiente per condividere le operazioni sul codice.
+
+---
+
 ## Note
 * Analisi su [e7cd7ab](https://gitlab.com/garrog/romp/-/commit/e7cd7ab5dfa5cbe5ac042fbc831c49637be561be)
 * 3 check warnings
@@ -620,3 +683,15 @@
         To ignore some dependencies, write `package.metadata.cargo-udeps.ignore` in Cargo.toml.
   ```
 * `ascii.rs` è eliminabile
+
+### Collaborative editing
+* Ovviamente liveshare di vscode
+* Foobits -- purtroppo inutilizzabile perché i plugins non sono mantenuti. Ho contattato l'azienda per vedere se fanno qualcosa a riguardo, ma non ci conto.
+* Duckly.
+  * Molte integrazioni (ma non vim, emacs, atom e sublime)
+  * La versione gratuita ha sessioni da 1h l'una. Potrebbe comunque essere sufficiente per i nostri scopi.
+* CodeTogether
+  * Meno integrazioni rispetto a duckly
+  * Più limitato di duckly nella versione gratuita
+  * End-to-end encryption
+* Teletype -- non utilizzabile al momento. Progettato per atom, ha un client che permetterebbe astrazione per altri editor ma in pratica queste non esistono.
