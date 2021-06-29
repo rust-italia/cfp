@@ -13,6 +13,9 @@ Effettuare un aggiornamento di queste componenti è pressoché fondamentale per 
 Per lavorare a tale progetto è necessario tempo e freschezza mentale.
 La migliore soluzione potrebbe quindi essere organizzare un incontro di sabato mattina della durata di 4 ore, dalle 9 alle 13.
 Tale incontro avrà una struttura _a workshop_, durante la quale verrà prima fatta una breve introduzione sulle problematiche da affrontare e ci si dividerà quindi in gruppi di 2-4 persone al massimo.
+
+È estremamente consigliato, durante le fasi di divisioni in gruppi, organizzarsi in modo tale che chi è alle prime armi si inserisca in un gruppo con persone con maggiore esperienza. Questo farà si che le task più semplice possano essere svolte da chi ha una minore esperienza con il supporto degli altri, mentre su task più complesse i componenti del gruppo che non staranno scrivendo codice potranno dare maggiori delucidazioni sul problema e la sua risoluzione.
+
 L'evento si dividerà in due fasi, di durata variabile in base alle esigenze di sviluppo.
 
 ### Prima fase
@@ -22,6 +25,10 @@ La prima fase servirà per far prendere dimestichezza ai partecipanti, così che
 Durante questa fase ogni gruppo prenderà in carico una issue precedentemente creata, risolverà il problema, se ritenuto necessario creerà un _regression test_ e creerà una merge request.
 Un piccolo gruppo di persone si occuperà di revisionare le merge request e, al momento opportuno, fare la merge.
 In base alla semplicità della issue, il gruppo potrà decidere di partire immediatamente con un'altra issue o decidere di aspettare la revisione.
+
+In questa fase, come già accennato in precedenza, ha senso che siano i componenti del gruppo con minore esperienza che si cimentino in prima persona nell'effettuare le modifiche al codice, con la supervisione degli altri.
+In questo modo l'intero gruppo potrà fare esperienza sulla codebase e allo stesso tempo anche semplici modifiche possono essere motivo di apprendimento.
+Si ricorda comunque che l'esperienza ha lo scopo di essere formativa e divertente, quindi è sensato ruotare i ruoli in modo da rendere piacevole il tutto.
 
 Si raccomanda dimestichezza con `git rebase` perché sarà frequente in queste fasi.
 
@@ -44,6 +51,8 @@ La procedura da seguire per ogni gruppo sarà la seguente:
 5. Si provvederà a convertire __il corpo della funzione__ al nuovo ecosistema asincrono.
    Tale conversione consiste nell'utilizzare i layer di compatibilità [di `futures`](https://docs.rs/futures/0.3.15/futures/compat/index.html) e [di `tokio`](https://docs.rs/tokio-compat/0.1.6/tokio_compat/) per poter utilizzare l'approccio attuale ma continuando a prendere in input e dare in output le strutture legacy.
 6. Merge request con review come in fase 1.
+
+Al contrario della prima fase, qui si consiglia di valutare caso per caso il modo più proficuo per effettuare modifiche al codice in relazione alle competenze. Come in precedenza è sensato che siano le persone meno esperte nel gestire la particolare situazione, ma allo stesso tempo la difficoltà del problema deve essere adeguato. Di conseguenza, se una persona del gruppo ritiene il problema troppo difficoltoso, è più proficuo che qualcun altro effettui le modifiche al codice e un'altra persona del gruppo spieghi il contesto e la soluzione che sta venendo adottata.
 
 ### Ipotetica terza fase
 
